@@ -1,14 +1,8 @@
-import { Button, Input, NumberInput, Text, TextInput, Title, createStyles } from '@mantine/core'
-import { Link } from '@tanstack/react-location'
-import { useState } from 'react'
+import { Button, NumberInput, TextInput, createStyles } from '@mantine/core'
+
 import MainNav from '../../components/MainNav/MainNav'
 import { useForm } from '@mantine/form'
 
-type FormDataType = {
-    1: string
-    2: number,
-    3: number,
-}
 
 const Create = () => {
 

@@ -1,11 +1,7 @@
-interface resolutionData {
-  resolutionName: string;
-  resolutionDifficulty: number;
-  resolutionDuration: number;
-}
+import { resolutionDataType } from "../types";
 
-export const saveToLocalStorage = (newResolution: resolutionData) => {
-  let currentData: resolutionData[] = [];
+export const saveToLocalStorage = (newResolution: resolutionDataType) => {
+  let currentData: resolutionDataType[] = [];
   const rawData = localStorage.getItem("resolutionData");
 
   if (rawData !== null) {
@@ -17,7 +13,7 @@ export const saveToLocalStorage = (newResolution: resolutionData) => {
     (resolution) => resolution.resolutionName === newResolution.resolutionName
   );
 
-  let updateData: resolutionData[];
+  let updateData: resolutionDataType[];
 
   if (doesExist) {
     updateData = currentData.map((resolution) => {
@@ -41,5 +37,20 @@ export const loadFromLocalStorage = () => {
     return JSON.parse(rawData);
   } else {
     return [];
+  }
+};
+
+export const deleteFromLocalStorage = (resolutionName: string) => {
+  // Load the Local Storage Data
+  let currentData: resolutionDataType[];
+  const rawData = localStorage.getItem("resolutionData");
+
+  if (rawData !== null) {
+    currentData = JSON.parse(rawData);
+    const newData = currentData.filter(
+      (entry: resolutionDataType) => entry.resolutionName !== resolutionName
+    );
+
+    localStorage.setItem("resolutionData", JSON.stringify(newData));
   }
 };

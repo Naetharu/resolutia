@@ -1,10 +1,7 @@
 import MainNav from '../../components/MainNav/MainNav';
 
 const Home = () => {
-
-  return (
-    <MainNav />
-  );
+  return <MainNav />
 };
 
 export default Home;

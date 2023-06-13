@@ -1,12 +1,13 @@
+
+import { useCallback, useEffect, useState } from 'react';
 import { Box, Button, Text, Title, createStyles } from '@mantine/core';
 import { Link } from '@tanstack/react-location';
 import MainNav from '../../components/MainNav/MainNav';
 import { resolutionDataType } from '../../types';
 import { deleteFromLocalStorage } from '../../helpers/handleLocalstorage';
 
-
-
 const Track = () => {
+
     // 1 STYLES
     const useStyles = createStyles((theme) => ({
         pageContainer: {
@@ -38,22 +39,33 @@ const Track = () => {
             padding: theme.spacing.md
         }
     }))
+
     const { classes } = useStyles()
+    const [resolutionData, setResolutionData] = useState<resolutionDataType[] | null>()
 
-    // 2 DATA LOADING
-    const item = localStorage.getItem("resolutionData")
-    const data = item ? JSON.parse(item) : null;
+    // Load the data on first render
+    useEffect(() => {
+        const item = localStorage.getItem("resolutionData")
 
-    // 3 Functions
-    const handleDeleteResolution = (resolution: string) => {
-        deleteFromLocalStorage(resolution)
-    }
+        if (item) {
+            setResolutionData(JSON.parse(item));
+        }
+        else {
+            setResolutionData(null);
+        }
+    }, [])
+
+    const handleDeleteResolution = useCallback((resolution: string) => {
+        deleteFromLocalStorage(resolution);
+        const item = localStorage.getItem("resolutionData");
+        setResolutionData(item ? JSON.parse(item) : null);
+    }, []);
 
     // 4 JSX
     return (
         <div className={classes.pageContainer}>
             <MainNav />
-            {!data ?
+            {!resolutionData ?
                 <>
                     <Text>Looks like you've not make any resolutions yet.</Text>
                     <Link to='/create'>Why not make one now?</Link>
@@ -61,7 +73,7 @@ const Track = () => {
                 :
                 <>
                     {
-                        data.map((resolution: resolutionDataType) => (
+                        resolutionData.map((resolution: resolutionDataType) => (
                             <Box className={classes.resolutionCard} key={resolution.resolutionName}>
                                 <Box className={classes.justifyRight}>
                                     <Button onClick={() => handleDeleteResolution(resolution.resolutionName)}>Delete</Button>

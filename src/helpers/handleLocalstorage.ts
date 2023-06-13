@@ -51,6 +51,10 @@ export const deleteFromLocalStorage = (resolutionName: string) => {
       (entry: resolutionDataType) => entry.resolutionName !== resolutionName
     );
 
-    localStorage.setItem("resolutionData", JSON.stringify(newData));
+    if (newData.length === 0) {
+      localStorage.removeItem("resolutionData");
+    } else {
+      localStorage.setItem("resolutionData", JSON.stringify(newData));
+    }
   }
 };

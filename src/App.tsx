@@ -1,16 +1,29 @@
 import './App.css'
-import { Link, ReactLocation, Router } from '@tanstack/react-location'
-import { routes } from './routes'
+import { Outlet } from '@tanstack/react-location'
 
+import { AppShell } from '@mantine/core';
+import MainHeader from './components/MainHeader/MainHeader';
 
-const location = new ReactLocation();
+const navigationLinks = [
+  {
+    to: '/',
+    text: 'Home'
+  },
+  {
+    to: '/about',
+    text: 'About'
+  }
+]
 
 function App() {
 
   return (
-    <>
-      <Router location={location} routes={routes} />
-    </>
+    <AppShell
+      padding="md"
+      header={<MainHeader links={navigationLinks} />}
+    >
+      <Outlet />
+    </AppShell>
   )
 }
 

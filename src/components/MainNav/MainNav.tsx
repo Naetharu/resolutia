@@ -1,6 +1,7 @@
 import { Group } from "@mantine/core";
 import { Link } from "@tanstack/react-location";
 
+
 const MainNav = () => {
   return (
     <Group>
